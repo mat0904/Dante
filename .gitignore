@@ -1,0 +1,13 @@
+*.o
+*.a
+*.log
+vgcore.*
+binary_name
+.idea
+*.gcda
+*.gcno
+solver/solver
+generator/generator
+data
+ispfct_1
+maze_example
