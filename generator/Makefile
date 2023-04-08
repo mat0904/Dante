@@ -21,27 +21,23 @@ SRC	=	src/main.c \
 		src/algo/kruskal/create_connection.c \
 		src/algo/kruskal/finish_maze.c
 
-OBJ_FOLDER	=	obj
 OBJ	=	$(SRC:.c=.o)
-OBJ_FILES	=	$(addprefix $(OBJ_FOLDER)/, $(notdir $(OBJ)))
 
 CC	=	gcc
 CFLAGS	=
-FLAGS	=
-SANITIZE	=	-g3
 EXE	=	generator
 
 all:	$(EXE)
 
 %.o:	%.c
-		@$(CC) -o $(OBJ_FOLDER)/$(notdir $@) -c $^ $(CFLAGS) $(FLAGS)
+		$(CC) -o $@ -c $< $(CFLAGS)
 
 $(EXE):	$(OBJ)
-		$(CC) -o $(EXE) $(OBJ_FILES) $(CFLAGS) $(FLAGS)
+		$(CC) -o $@ $^
 
 clean:
 		@make -C ./tests clean
-		@rm -rf $(OBJ_FILES)
+		@rm -rf $(OBJ)
 		@rm -rf vgcore*
 		@rm -rf *.gcda
 		@rm -rf *.gcno
@@ -49,9 +45,6 @@ clean:
 fclean:	clean
 		@make -C ./tests fclean
 		@rm -rf $(EXE)
-
-valgrind:	$(OBJ)
-			$(CC) -o $(EXE) $(OBJ_FILES) $(CFLAGS) $(FLAGS) $(SANITIZE)
 
 re:	fclean all
 
